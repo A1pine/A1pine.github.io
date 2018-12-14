@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title>Android 开发学习笔记（二）</title>
+      <link href="/2018/12/13/Android_Develop_Learnning_2/"/>
+      <url>/2018/12/13/Android_Develop_Learnning_2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="AndroidManifest-xml"><a href="#AndroidManifest-xml" class="headerlink" title="AndroidManifest.xml"></a>AndroidManifest.xml</h1><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="AWK"><figure class="iseeu highlight /awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app<span class="regexp">/src/m</span>ain<span class="regexp">/AndroidManifest.xml</span></span><br></pre></td></tr></table></figure></div><p>安装apk时，AndroidManifest.xml是软件包安装程序读取的文件</p><pre><code>    &lt;activity android:name=&quot;.MainActivity&quot;&gt;    &lt;intent-filter&gt;        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;    &lt;/intent-filter&gt;&lt;/activity&gt;</code></pre><p>这些代码注册了一个活动：MainActivity<br><strong>所有的活动必须在AndroidManifest.xml中注册</strong><br>所有用户可见的东西都在活动（Activity）中，其中 <strong>intent-filter</strong> 告诉系统 标签中的内容是主活动。</p><hr><h1 id="初探活动Mainactivity"><a href="#初探活动Mainactivity" class="headerlink" title="初探活动Mainactivity"></a>初探活动Mainactivity</h1><pre><code>package com.a1pine.mrtxn.myapplication;import android.support.v7.app.AppCompatActivity;import android.os.Bundle;import android.widget.TextView;public class MainActivity extends AppCompatActivity {// Used to load the &apos;native-lib&apos; library on application startup.static {    System.loadLibrary(&quot;native-lib&quot;);}@Overrideprotected void onCreate(Bundle savedInstanceState) {    super.onCreate(savedInstanceState);    setContentView(R.layout.activity_main);    // Example of a call to a native method    TextView tv = (TextView) findViewById(R.id.sample_text);    tv.setText(stringFromJNI());}/*** A native method that is implemented by the &apos;native-lib&apos; native library,* which is packaged with this application.*/public native String stringFromJNI();    }</code></pre><p>MainActivity继承父类AppCompatActivity<br>AppCompatActivity是一种新的用来替换之前Activity的类，具有“Activity”的所有特性，且为MD设计提供了API支持。<br>onCreate()方法调用了setContextView()方法 给当前活动引入了一个main布局。</p><hr><h1 id="初探布局"><a href="#初探布局" class="headerlink" title="初探布局"></a>初探布局</h1><pre><code>\app\src\main\layout\main.xml</code></pre><p>看到如下代码</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;android.support.constraint.ConstraintLayout     xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;xmlns:tools=&quot;http://schemas.android.com/tools&quot;android:layout_width=&quot;match_parent&quot;android:layout_height=&quot;match_parent&quot;tools:context=&quot;.MainActivity&quot;&gt;&lt;TextView    android:id=&quot;@+id/sample_text&quot;    android:layout_width=&quot;wrap_content&quot;    android:layout_height=&quot;wrap_content&quot;    android:text=&quot;Hello World!&quot;    app:layout_constraintBottom_toBottomOf=&quot;parent&quot;    app:layout_constraintLeft_toLeftOf=&quot;parent&quot;    app:layout_constraintRight_toRightOf=&quot;parent&quot;    app:layout_constraintTop_toTopOf=&quot;parent&quot; /&gt;&lt;/android.support.constraint.ConstraintLayout&gt; </code></pre><p>控制主界面上Hello World！的内容由android:text=”Hello World!”定义</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android应用开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android开发 </tag>
+            
+            <tag> Android </tag>
+            
+            <tag> 安卓 </tag>
+            
+            <tag> 学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>Android 开发学习笔记（一）</title>
+      <link href="/2018/12/10/Android_Develop_Learnning_1/"/>
+      <url>/2018/12/10/Android_Develop_Learnning_1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-Android-项目结构"><a href="#1-Android-项目结构" class="headerlink" title="1.Android 项目结构"></a>1.Android 项目结构</h1><p><img src="/images/Android_Develop_Learnning_1.1.PNG" alt=""></p><h2 id="1-1-app：项目中和资源文件"><a href="#1-1-app：项目中和资源文件" class="headerlink" title="1.1 app：项目中和资源文件"></a>1.1 app：项目中和资源文件</h2><h3 id="1-1-1-app-build-编译过程产生的缓存文件"><a href="#1-1-1-app-build-编译过程产生的缓存文件" class="headerlink" title="1.1.1 app/build : 编译过程产生的缓存文件"></a>1.1.1 app/build : 编译过程产生的缓存文件</h3><h3 id="1-1-2-app-libs-放置第三方的Jar文件"><a href="#1-1-2-app-libs-放置第三方的Jar文件" class="headerlink" title="1.1.2 app/libs : 放置第三方的Jar文件"></a>1.1.2 app/libs : 放置第三方的Jar文件</h3><h3 id="1-1-3-app-androidTest-用来编写自动化测试"><a href="#1-1-3-app-androidTest-用来编写自动化测试" class="headerlink" title="1.1.3 app/androidTest : 用来编写自动化测试"></a>1.1.3 app/androidTest : 用来编写自动化测试</h3><h3 id="1-1-4-app-JAVA-存放Java代码"><a href="#1-1-4-app-JAVA-存放Java代码" class="headerlink" title="1.1.4 app/JAVA : 存放Java代码"></a>1.1.4 app/JAVA : 存放Java代码</h3><h3 id="1-1-5-app-res-资源文件夹，存放项目里所有的图片，布局，字符串资源"><a href="#1-1-5-app-res-资源文件夹，存放项目里所有的图片，布局，字符串资源" class="headerlink" title="1.1.5 app/res : 资源文件夹，存放项目里所有的图片，布局，字符串资源"></a>1.1.5 app/res : 资源文件夹，存放项目里所有的图片，布局，字符串资源</h3><h3 id="1-1-6-AndroidMainifest-xml"><a href="#1-1-6-AndroidMainifest-xml" class="headerlink" title="1.1.6 AndroidMainifest.xml"></a>1.1.6 AndroidMainifest.xml</h3><blockquote><p>Android 系统有四大组件，分别是 Activity （活动）, Service（服务）, Broadcast Receiver（广播接收器）和 Content Provider（内容提供器）。无论多么复杂的程序都是由四大组件构成的。一个程序你能看到的界面，都是活动；退出了仍然在后台运行的，都是服务；能被一些情景，像电话，网络状态变化等唤醒的都是广播接收器；能跨程序共享数据的，都是内容提供器。</p></blockquote><h2 id="1-2-gradle和-idea-Android-Studio自动生成-无需编辑"><a href="#1-2-gradle和-idea-Android-Studio自动生成-无需编辑" class="headerlink" title="1.2 .gradle和.idea : Android Studio自动生成 无需编辑"></a>1.2 .gradle和.idea : Android Studio自动生成 无需编辑</h2><h2 id="1-3-build-编译过程产生的缓存文件"><a href="#1-3-build-编译过程产生的缓存文件" class="headerlink" title="1.3 build : 编译过程产生的缓存文件"></a>1.3 build : 编译过程产生的缓存文件</h2><h2 id="1-4-gradle-保存gradle-wrapper的配置文件"><a href="#1-4-gradle-保存gradle-wrapper的配置文件" class="headerlink" title="1.4 gradle :  保存gradle wrapper的配置文件"></a>1.4 gradle : 保存gradle wrapper的配置文件</h2><h2 id="1-5-gitgnore-排除在版本控制以外的文件和目录"><a href="#1-5-gitgnore-排除在版本控制以外的文件和目录" class="headerlink" title="1.5 .gitgnore : 排除在版本控制以外的文件和目录"></a>1.5 .gitgnore : 排除在版本控制以外的文件和目录</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> Android应用开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Android开发 </tag>
+            
+            <tag> Android </tag>
+            
+            <tag> 安卓 </tag>
+            
+            <tag> 学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+  
+  
+</search>
