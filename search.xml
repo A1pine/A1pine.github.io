@@ -3,6 +3,39 @@
   
     
     <entry>
+      <title>Noip2015 Day1 T2 信息传递</title>
+      <link href="/2018/12/20/NOIP2015_Day1_T2/"/>
+      <url>/2018/12/20/NOIP2015_Day1_T2/</url>
+      
+        <content type="html"><![CDATA[<p>梦开始结束的地方…<br>打了三个小时幻方的地方<br><a id="more"></a><br></p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false"data-rel="CPP"><figure class="iseeu highlight /cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 200001</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> from;</span><br><span class="line">  <span class="keyword">int</span> to;</span><br><span class="line">  <span class="keyword">int</span> next;</span><br><span class="line">&#125; edge[MAXN];</span><br><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"><span class="keyword">int</span> pre[MAXN];</span><br><span class="line"><span class="keyword">int</span> DFN[MAXN], LOW[MAXN], timecount;</span><br><span class="line"><span class="keyword">int</span> edgecount = <span class="number">1</span>, mingame = <span class="number">0x7fffffff</span>, tot, sfront;</span><br><span class="line"><span class="keyword">bool</span> instack[MAXN];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addnode</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">  edge[edgecount].from = u;</span><br><span class="line">  edge[edgecount].to = v;</span><br><span class="line">  edge[edgecount].next = pre[u];</span><br><span class="line">  pre[u] = edgecount++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">tarjan</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">  LOW[u] = DFN[u] = ++timecount;</span><br><span class="line">  s.push(u);</span><br><span class="line">  instack[u] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = pre[u]; i != <span class="number">-1</span>; i = edge[i].next) &#123;</span><br><span class="line">    <span class="keyword">if</span> (DFN[edge[i].to] == <span class="number">0</span>) &#123;</span><br><span class="line">      tarjan(edge[i].to);</span><br><span class="line">      LOW[u] = min(LOW[u], LOW[edge[i].to]);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (DFN[edge[i].to] != <span class="number">0</span> &amp;&amp; instack[edge[i].to] == <span class="number">1</span>) &#123;</span><br><span class="line">      LOW[u] = min(LOW[u], LOW[edge[i].to]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (LOW[u] == DFN[u]) &#123;</span><br><span class="line">    tot = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">      sfront = s.top();</span><br><span class="line">      instack[sfront] = <span class="number">0</span>;</span><br><span class="line">      s.pop();</span><br><span class="line">      tot++;</span><br><span class="line">    &#125; <span class="keyword">while</span> (LOW[sfront] != DFN[sfront]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (tot &lt; mingame &amp;&amp; tot &gt; <span class="number">1</span>) mingame = tot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n, t;</span><br><span class="line">  <span class="built_in">memset</span>(pre, <span class="number">-1</span>, <span class="keyword">sizeof</span>(pre));</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">    addnode(i, t);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    <span class="keyword">if</span> (DFN[i] == <span class="number">0</span>) tarjan(i);</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; mingame;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><p></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法与数据结构 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> 算法 </tag>
+            
+            <tag> Tarjan </tag>
+            
+            <tag> 强连通分量 </tag>
+            
+            <tag> DFS </tag>
+            
+            <tag> 有向图 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>CODEVSP2602 最短路径问题</title>
       <link href="/2018/12/19/CODEVS_P2602/"/>
       <url>/2018/12/19/CODEVS_P2602/</url>
