@@ -3,6 +3,33 @@
   
     
     <entry>
+      <title>Windows逆向学习笔记(一)</title>
+      <link href="/2019/01/23/Windows_Reverse_Learning/"/>
+      <url>/2019/01/23/Windows_Reverse_Learning/</url>
+      
+        <content type="html"><![CDATA[<p>好久没更新了，最近在学Windows端的逆向，看的是吾爱破解上ximo的教程，上来记个笔记,笔记的内容是关于手脱<code>UPX壳</code>和<code>ASPACK壳</code><br>现在还处于特别萌新的状态，暂时还没遇到什么特别大的问题。</p><h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><p><code>OD</code>和<code>PEiD</code></p><h1 id="OD常用快捷键"><a href="#OD常用快捷键" class="headerlink" title="OD常用快捷键"></a>OD常用快捷键</h1><blockquote><p>F4：运行到当前位置<br>F8：单步运行<br>F7: 进入函数（防止跑飞）<br>alt +M：查看内存</p></blockquote><h1 id="查找OEP（Original-Entry-Point-程序入口）"><a href="#查找OEP（Original-Entry-Point-程序入口）" class="headerlink" title="查找OEP（Original Entry Point 程序入口）"></a>查找OEP（Original Entry Point 程序入口）</h1><h2 id="对于UPX壳和ASPACK壳"><a href="#对于UPX壳和ASPACK壳" class="headerlink" title="对于UPX壳和ASPACK壳"></a>对于<code>UPX壳</code>和<code>ASPACK壳</code></h2><h3 id="1-单步跟踪法"><a href="#1-单步跟踪法" class="headerlink" title="1. 单步跟踪法"></a>1. 单步跟踪法</h3><p>从程序开始向下单步运行，向上的跳转使之实现，向下的跳转不让它实现（直接点击下一句然后运行到当前位置）</p><h3 id="2-ESP定律法"><a href="#2-ESP定律法" class="headerlink" title="2. ESP定律法"></a>2. ESP定律法</h3><p>运行到关键句的下一句发现ESP对应的地址变红 (ESP第一次改变时)<br>右键-&gt;在数据窗口跟随 或者<code>dd XXXXX</code>或者 <code>hr XXXXX</code>（对ESP的地址设置硬件字访问断点）<br>然后运行再单步跟踪</p><h3 id="3-2次内存镜像法"><a href="#3-2次内存镜像法" class="headerlink" title="3. 2次内存镜像法"></a>3. 2次内存镜像法</h3><p>按ALT+M,打开内存镜象，找到程序的第一个.rsrc.按F2下断点，然后按SHIFT+F9运 行到断点，接着再按ALT+M,打开内存镜象，找到程序的第一个.rsrc.上面的代码段.text（或者CODE）（也就是00401000处），按F2下断点。然后按SHIFT+F9（或者是在没异常情况下按F9）， 直接到达程序OEP</p><h3 id="4-一步直达法"><a href="#4-一步直达法" class="headerlink" title="4. 一步直达法"></a>4. 一步直达法</h3><p>看关键句pushad 直接右键查找popad （不要勾选 整个段）</p><p>对于 <code>ASPACK壳</code></p><h3 id="5-模拟跟踪法（慢）"><a href="#5-模拟跟踪法（慢）" class="headerlink" title="5. 模拟跟踪法（慢）"></a>5. 模拟跟踪法（慢）</h3><p><code>alt + M</code> 然后输入<code>tc eip&lt;00430000</code>（<code>.aspack</code>对应地址）</p><h3 id="6-SFX"><a href="#6-SFX" class="headerlink" title="6. SFX"></a>6. SFX</h3><p>选项-&gt;调试设置-&gt;SFX -&gt;块方式跟踪真正入口（不一定准确）</p><h1 id="脱壳"><a href="#脱壳" class="headerlink" title="脱壳"></a>脱壳</h1><h2 id="1-直接脱"><a href="#1-直接脱" class="headerlink" title="1. 直接脱"></a>1. 直接脱</h2><p>在OEP处右键-&gt;用OD脱壳调试进程-&gt;脱壳</p><h2 id="2-LordPE"><a href="#2-LordPE" class="headerlink" title="2.LordPE"></a>2.LordPE</h2><p>找到进程-&gt;右键修正镜像大小-&gt;右键完整转存<br>PS.如果脱壳后无法打开<br>importREC输入表重建<br>找到进程-&gt;输入OEP地址-&gt;自动查找IAT-&gt;获取输入表-&gt;显示无效函数-&gt;修复转存文件</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Windows逆向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows逆向 </tag>
+            
+            <tag> 脱壳 </tag>
+            
+            <tag> UnPackMe </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>CODEVSP2602 信与信封问题</title>
       <link href="/2018/12/23/CODEVS_P1222/"/>
       <url>/2018/12/23/CODEVS_P1222/</url>
