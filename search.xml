@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>模板-归并排序</title>
+      <link href="/2019/04/28/template_mergesort/"/>
+      <url>/2019/04/28/template_mergesort/</url>
+      
+        <content type="html"><![CDATA[<p>人老了之后真是做什么都事倍功半… 一个归并排序调试了我将近一个小时..</p><p>先贴代码…</p><div class="highlight-wrap"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false"data-rel="CPP"><figure class="iseeu highlight /cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">101</span>], temp[<span class="number">101</span>];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> mid)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">1</span>, i = l, j = mid + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;</span><br><span class="line">        a[i] &lt; a[j] ? temp[k++] = a[i++] : temp[k++] = a[j++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) temp[k++] = a[i++];</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r) temp[k++] = a[j++];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= k - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        a[l + i - <span class="number">1</span>] = temp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (l &lt; r) &#123;</span><br><span class="line">        <span class="keyword">int</span> center = (l + r) / <span class="number">2</span>;</span><br><span class="line">        merge_sort(l, center);</span><br><span class="line">        merge_sort(center + <span class="number">1</span>, r);</span><br><span class="line">        Merge(l, r, center);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    merge_sort(<span class="number">1</span>, n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; a[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><p>遇到的问题</p><ul><li>左边界和右边界写反（我也不知道我在干什么…）</li><li>比较的时候实际上是左半边和右半边对应比较，然后较小的那一边的数字填入临时数组，指针往后移动一位</li><li>在递归过程里，数组的元素是固定不变的，变的是通过一个临时数组存放后返回的下标，也即是 顺摆放序。</li><li>递归边界（左右相等）</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法与数据结构 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 排序 </tag>
+            
+            <tag> 模板 </tag>
+            
+            <tag> 递归 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Windows逆向学习笔记(一)</title>
       <link href="/2019/01/23/Windows_Reverse_Learning_1/"/>
       <url>/2019/01/23/Windows_Reverse_Learning_1/</url>
