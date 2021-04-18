@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="刷机包是怎样炼成的！（二）1.本文使用Markdown编写 请复制到支持Markdown的文本浏览器内以获取最佳阅读效果2.本文所有代码使用Java格式高亮 然而所有代码并不是Java 而是Edify语言3.获取最新更新内容请关注新浪微博@A1pine欢迎来到刷机玩家终极进阶教程的第二篇。
+上一篇，我们讲到了刷机包的基本结构。作为系列的第一篇，作用当然是让大家对整体结构有一定的了解。上一篇所讲的知">
+  <meta name="author" content="A1pine">
+  <meta name="keywords" content="">
+  
+  <title>刷机包是怎样炼成的！（二） - 宁愿</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="刷机包是怎样炼成的！（二）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-07-21 20:16" pubdate>
+        2018年7月21日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">刷机包是怎样炼成的！（二）</h1>
+            
+            <div class="markdown-body">
+              <p>刷机包是怎样炼成的！（二）<br>1.本文使用Markdown编写 请复制到支持Markdown的文本浏览器内以获取最佳阅读效果<br>2.本文所有代码使用Java格式高亮 然而所有代码并不是Java 而是Edify语言<br>3.获取最新更新内容请关注新浪微博@A1pine<br>欢迎来到刷机玩家终极进阶教程的第二篇。</p>
+<p>上一篇，我们讲到了刷机包的基本结构。作为系列的第一篇，作用当然是让大家对整体结构有一定的了解。上一篇所讲的知识，虽然繁多但多不深入。上一篇发表后，可谓是酷安引起了轰动。在发布后的1个小时，我收到了150余条回复和几百条几百条收藏，看到那篇文章能够如此受欢迎，我怀着惊喜和满足回复完了所有150余条回复，然而，我没想到的是，在短短的一夜过后，阅读，收藏，评论量翻了几番，我很想一一解答你们的问题，然而因为正处于考试周，并没有太多的时间来一一回复，在这里，先给有疑问却没收到我的答复的酷友们道一句抱歉。在这里，我也号召那些对刷机颇有研究的酷友，和我一起为其他酷友答疑解惑，谢谢。</p>
+<p>第二件事，是关于本系列的安排，我计划将本系列分为六个章节，第一章讲了刷机包的大体结构，这一章是第二章，所要提到的内容是updater-script，即刷机脚本的常见命令。下一次，主要讲的是boot.img的主要结构，第四章讲system的主要结构，第五章会提到底包中中各个文件的作用。第六章，也就是全系列的最后一章，我会以一次移植为例子，讲解制作刷机包时，我们都干了些什么，这些操作的目的是什么。更新周期大概在1-2周。重点（敲黑板）主要是三四五三章。</p>
+<p>好了，话不多说，让我们进入到今天的学习当中吧</p>
+<p>首先我们打开updater-script（以一加5 氢OS7.1.1 稳定版为例）</p>
+<p><img src="/images/the_way_to_an_android_rom_2/the_way_to_an_android_rom_2.1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>看到第一句，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">getprop(&quot;ro.display.series&quot;) &#x3D;&#x3D; &quot;OnePlus 5&quot; || abort(&quot;E3004: This package is for \&quot;OnePlus 5\&quot; devices; this is a \&quot;&quot; + getprop(&quot;ro.display.series&quot;) + &quot;\&quot;.&quot;)<br></code></pre></td></tr></table></figure>
+
+<p>第一句是机型验证，作用是防止刷机包被不兼容的机型刷入</p>
+<p>这句话翻译成中文是</p>
+<p>如果ro.display.series的值不是”OnePlus 5”，就报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">E3004: This package is for \&quot;OnePlus 5\&quot; devices; this is a \&quot;&quot; + ro.display.series 中的中的值&quot;) + &quot;\&quot;.&quot;<br></code></pre></td></tr></table></figure>
+<span id="more"></span> 
+<p>相信只要你会任何一门程序语言，读懂这句话都不在话下，可以瞥见，ro.display.series 中的值就是机型的代号，如果该代号和刷机包期待的代号不相符，就会报错不进入刷机过程。</p>
+<p>第二行是 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">show_progress(0.750000, 0);<br></code></pre></td></tr></table></figure>
+<p>这个能在updater-script中多处见到，它的作用主要是显示刷机的进度，让刷机者在过程中能看到进度条的更新而不是误以为手机死机。</p>
+<p>它的用法是showprogress（进度向前移动x（完成度等于1为完成）, 可能需要消耗的时间（单位s）) 比如图中这句话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">show_progress(0.750000, 0);<br></code></pre></td></tr></table></figure>
+
+<p>意思是，该操作可能需要0秒完成，完成后总进度向前进百分之75。</p>
+<p>然后第三句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">ui_print(&quot;Patching system image unconditionally...&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>ui_print(“”)的作用是将引号内的话打印到屏幕上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">ui_print(&quot;此乃教程第二篇&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>然后从第四句开始，重头戏来了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs edify">block_image_update(&quot;&#x2F;dev&#x2F;block&#x2F;bootdevice&#x2F;by-name&#x2F;system&quot;, package_extract_file(&quot;system.transfer.list&quot;), &quot;system.new.dat&quot;, &quot;system.patch.dat&quot;) ||<br><br>abort(&quot;E1001: Failed to update system image.&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>首先我们看这个语句分为三个函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs edify">block_image_update(x,y,z,w)<br><br>package_extract_file(&quot;system.transfer.list&quot;)<br><br></code></pre></td></tr></table></figure>
+
+<p>和</p>
+<p>abort(“E1001: Failed to update system image.”);</p>
+<p>之前有提到过从Android 5.0开始支持dm-verity，所以必须按照block更新分区，block_image_update的意思，就是按block更新分区，函数内部有四个参数,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs edify">&quot;&#x2F;dev&#x2F;block&#x2F;bootdevice&#x2F;by-name&#x2F;system&quot;<br><br>package_extract_file(&quot;system.transfer.list&quot;)<br><br>&quot;system.new.dat&quot;,<br><br>&quot;system.patch.dat&quot;<br><br>system.transfer.list<br></code></pre></td></tr></table></figure>
+
+<p>/dev/block/bootdevice/by-name/system指的是system分区</p>
+<p>package_extract_file(“system.transfer.list”)将system.transfer.list提取出来传给了block_image_update</p>
+<p>system.transfer.list中的内容跟block有关</p>
+<p>system.transfer.list中的内容解释如下</p>
+<p>第一行为版本号</p>
+<p>第二行是需要写入的block总数（）</p>
+<p>另外system.transfer.list还支持三种操作</p>
+<p>erase 将目标分区的range清除；</p>
+<p>zero 将目标分区的range使用0填充；</p>
+<p>new: 将目标分区的range使用new_data文件填充；</p>
+<p>system.patch.dat和system.patch.dat相信大家大家都不陌生</p>
+<p>就是刷机包中的另外两个文件 我们的镜像主要就在system.patch.dat内。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">||abort(&quot;E1001: Failed to update system image.&quot;);<br></code></pre></td></tr></table></figure>
+<p>||abort(“E1001: Failed to update system image.”);的意思当然就是 如果解包失败，就警告后面的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">package_extract_file(&quot;boot.img&quot;, &quot;&#x2F;dev&#x2F;block&#x2F;bootdevice&#x2F;by-name&#x2F;boot&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>和上面一样 将boot.img 解包到boot分区</p>
+<p>在其他的升级脚本中，常见的还有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">mount(&quot;ext4&quot;, &quot;EMMC&quot;, &quot;&#x2F;dev&#x2F;block&#x2F;bootdevice&#x2F;by-name&#x2F;userdata&quot;, &quot;&#x2F;data&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>和Linux 一样 这是挂载了data 分区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">format(&quot;ext4&quot;, &quot;EMMC&quot;, &quot;&#x2F;dev&#x2F;block&#x2F;bootdevice&#x2F;by-name&#x2F;system&quot;, &quot;0&quot;, &quot;&#x2F;system&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>将system格式化</p>
+<p>symlink &lt;目标&gt; &lt;目录&gt;</p>
+<p>相当于linux中的ln命令 创建了一个软链接，在第二个参数下下创建第一个参数代表的文件的软链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">set_metadata(&quot;&#x2F;system&#x2F;xbin&#x2F;shelld&quot;, &quot;uid&quot;, 0, &quot;gid&quot;, 1000, &quot;mode&quot;, 0754, &quot;capabilities&quot;, 0x0, &quot;selabel&quot;, &quot;u:object_r:system_file:s0&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>修改了目标目录的权限和组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs edify">unmount(&quot;&#x2F;system&quot;);<br></code></pre></td></tr></table></figure>
+
+<p>解除system分区的挂载</p>
+<p>好了 第二期就到这了，还是欢迎大家留言、转载、批评指正</p>
+<p>另外 新浪微博**@A1pine** 求一波关注 以后更新在微博上也会发哦</p>
+<p>#安卓日常# #玩机技巧# #刷机#</p>
+<p>参考文献</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="http://zhebk.cn/Android/updater-script.html"> Android 刷机脚本updater-script 详解. </a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lewif/article/details/49124709"> 如何导出android系统中的某一分区 </a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ly890700/article/details/58696379"> aosp源码分析 5.0 BlockImageUpdateFn </a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23632918">自用 updater-script 备忘</a></p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/AndroidRom%E5%BC%80%E5%8F%91/">AndroidRom开发</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Android%E5%BC%80%E5%8F%91/">Android开发</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Android/">Android</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%89%E5%8D%93/">安卓</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%8E%A9%E6%9C%BA%E6%8C%87%E5%8D%97/">玩机指南</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/12/10/Android_Develop_Learnning_1/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Android 开发学习笔记（一）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/07/01/the_way_to_an_android_rom_1/">
+                        <span class="hidden-mobile">刷机包是怎样炼成的！（一）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

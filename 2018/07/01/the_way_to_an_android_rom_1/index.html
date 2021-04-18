@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="————刷机包文件目录浅谈
+都说刷机的最高境界就是会做包。作为一个爱刷机的人，有时候看着别的机型有各种各样的Rom，就会心生羡慕，MIUI，Flyme，Smartisan OS，魔趣，Linegeaos，Color OS，Funtouch OS，360 OS，甚至把时间线拉的再早些，IUNI OS，乐蛙，Fiui，想必每一个刷机佬都至少刷过其中的一种，也相信学会移植第三方Rom是每个刷机佬久久挥之">
+  <meta name="author" content="A1pine">
+  <meta name="keywords" content="">
+  
+  <title>刷机包是怎样炼成的！（一） - 宁愿</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.9","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="刷机包是怎样炼成的！（一）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-07-01 20:16" pubdate>
+        2018年7月1日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">刷机包是怎样炼成的！（一）</h1>
+            
+            <div class="markdown-body">
+              <p>————刷机包文件目录浅谈</p>
+<p>都说刷机的最高境界就是会做包。作为一个爱刷机的人，有时候看着别的机型有各种各样的Rom，就会心生羡慕，MIUI，Flyme，Smartisan OS，魔趣，Linegeaos，Color OS，Funtouch OS，360 OS，甚至把时间线拉的再早些，IUNI OS，乐蛙，Fiui，想必每一个刷机佬都至少刷过其中的一种，也相信学会移植第三方Rom是每个刷机佬久久挥之不去的梦想。其实，第三方Rom的来源也是多样的，但是，由于Android系统构的特殊性，刷机包的结构大多相似，所以，谨以本系列，给各位酷友简单讲讲Android的刷机包文件目录，如有错误或者不够严谨的地方，欢迎指正。本文使用Markdown书写，请自行粘贴至支持Markdown的阅读器内以获取最佳阅读效果<br><strong>本文首发于酷安 转载请注明来源</strong></p>
+<h1 id="根目录粗谈"><a href="#根目录粗谈" class="headerlink" title="根目录粗谈"></a>根目录粗谈</h1><p><img src="/images/the_way_to_an_android_rom_1/the_way_to_an_android_rom_1.1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>作为本系列的第一篇文章，我决定讲一讲Android刷机包的根目录，就是我们直接用压缩文件打开一个刷机包看到的目录，这个目录可能会由于机型的不同、系统版本的不同、开发者习惯的不同而千差万别，但是，从原理上讲，都是大同小异的。我会将这个部分分成两个部分</p>
+<p>第一部分是通用部分，这一部分讲到的文件，在几乎所有的刷机包的根目录下均能看到。</p>
+<h2 id="相同部分"><a href="#相同部分" class="headerlink" title="相同部分"></a>相同部分</h2><p>首先要讲的就是boot.img</p>
+<p>boot.img内包含的是与系统启动需要加载的一些文件，这一部分也是一个移植的第三方Rom能否启动的决定性因素，这里就必须要讲到Android系统的启动流程。</p>
+<p>从你按下Power键的那一刻起，首先工作起来的是Boot Loader，Boot Loader对于刷过机的朋友们来说并不陌生，它是在Android内核运行前加载的一部分小程序，它的作用也和它所在的位置有关，通过Boot Loader 我们可以加载内核到内存，使得我们手机的硬件得到初始化，这些和Linux的特性保持一致，由于本文只是一篇简述性的文章，所以在此不做过多的赘述，在这里贴出两篇较好的文章，方便有兴趣的读者们查阅</p>
+<p>一篇是Android系统启动顺序(按下power键后所做的的工作) 来自CSDN <a target="_blank" rel="noopener" href="http://dwz.cn/87kAeX"> http://dwz.cn/87kAeX </a></p>
+<p>另一篇是Boot Loader 来自极客学院 <a target="_blank" rel="noopener" href="http://wiki.jikexueyuan.com/project/learn-linux-step-by-step/boot-loader.html"> http://wiki.jikexueyuan.com/project/learn-linux-step-by-step/boot-loader.html </a></p>
+<p>boot.img主要包含三部分文件头信息boot header、内核kernel 和 文件系统数据ramdisk。</p>
+<span id="more"></span> 
+<p>这些都是和启动相关的文件，简单的来讲，如果你在启动的时候只按了开机键，即系统认为这次启动是正常开机，手机就会加载boot.img内的文件使得正常进入到系统启动环节。</p>
+<p>关于boot.img的具体结构，我后期会再写一篇文章做更详细的讲解，在此之前，如果你有逆向相关的知识，可以访问android boot.img 结构 来自CSDN <a target="_blank" rel="noopener" href="http://dwz.cn/87l2fh"> http://dwz.cn/87l2fh </a></p>
+<p>然后是最常见的META-INF</p>
+<p><img src="/images/the_way_to_an_android_rom_1/the_way_to_an_android_rom_1.2.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>在META-INF 有三个文件CERT.RSA，CERT.SF，MANIFEST.MF，这三个文件储存的是Rom的签名信息，这一部分牵涉到RSA加密的知识，和我们的讨论无关，大家如果有兴趣可以自行搜索了解。</p>
+<p>META-INF还包含了一个文件夹com，将com展开有android和google两层，在android下一般会有metadata和otacert. Metadata的学术名称叫做“元数据”，它储存了描述设备信息及环境变量的数据。比如一些编译选项，签名公钥，时间戳以及设备型号。Otacert和设备的OTA升级有关。</p>
+<p><img src="/images/the_way_to_an_android_rom_1/the_way_to_an_android_rom_1.3.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>这些和我们要说的都没有太大的关系，我们要关注的主要内容在google/android下 这下面有两个文件update-binary和updater-script。做移植时主要要考虑的就是updater-script中的内容，它们决定了刷机包中的每个文件最终会到达哪个位置。而update-binary则不用修改，因为它像是一个二进制的脚本解释器，对updater-script中各类操作（函数）做了解释说明。</p>
+<p><img src="/images/the_way_to_an_android_rom_1/the_way_to_an_android_rom_1.4.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="不同的地方…"><a href="#不同的地方…" class="headerlink" title="不同的地方…"></a>不同的地方…</h2><p>剩下来的又主要分为两个部分</p>
+<h2 id="1-system部分"><a href="#1-system部分" class="headerlink" title="1. system部分"></a>1. system部分</h2><p>有的Rom直接就有System文件夹，这个直接对System进行修改便可，还有的只能看见system.new.dat、system.patch.dat、system.transfer.list三个文件，这种情况在安卓5.0以后较为常见，而且如果是原厂提供的包，一定是这种格式，因为Android 5.0开始支持dm-verity，所以必须按照block更新分区 要对它进行修改，必须解析system.transfer.list文件然后将system.new.dat解包为ext4格式system.img，才通过挂载system.img的方式将system文件提取出来，（相关软件会在文末给出）而打包成这个格式需要用到file_context文件，这个可以从boot.img中获取，值得注意的是，在升级到安卓7.0以后，file_context变成了file_context.bin需要用相关软件转化（[工具]( <a target="_blank" rel="noopener" href="http://dwz.cn/87kA17">http://dwz.cn/87kA17</a> ）才能被读取。</p>
+<h2 id="2-底包"><a href="#2-底包" class="headerlink" title="2. 底包"></a>2. 底包</h2><p>这里直接引用龙猪@马丁龙猪的话</p>
+<blockquote>
+<p>什么是底包？<br>我们平时刷第三方 ROM，实际上只是刷了 boot 和 system 两个分区（俗称内核和系统）。对于大多数手机来说，除了这两个分区，还包括了大家俗称的基带、Modem、TrustZone 等必不可少的分区。<br>这些分区的版本是需要和系统或内核里相关的驱动版本一致才可以正常工作。比方说，假如系统里的驱动更新了，而 TrustZone 没有更新，那么指纹传感器可能会不正常；Modem 版本不对，可能会没有网络。<br>来自<a target="_blank" rel="noopener" href="https://bbs.mokeedev.com/t/topic/281/">MoKee Open Source Community</a> </p>
+</blockquote>
+<p><img src="/images/the_way_to_an_android_rom_1/the_way_to_an_android_rom_1.5.jpg" srcset="/img/loading.gif" lazyload><br><img src="/images/the_way_to_an_android_rom_1/the_way_to_an_android_rom_1.6.jpg" srcset="/img/loading.gif" lazyload></p>
+<h3 id="常用工具"><a href="#常用工具" class="headerlink" title="常用工具"></a>常用工具</h3><ol>
+<li>[SuperR’s Kitchen]( <a target="_blank" rel="noopener" href="http://dwz.cn/87kAge">http://dwz.cn/87kAge</a> </li>
+</ol>
+<p>2.[解包+打包System.new.dat]( <a target="_blank" rel="noopener" href="http://dwz.cn/87kAlX">http://dwz.cn/87kAlX</a> </p>
+<p>3.[file_contexts.bin和file_contexts转换工具]( <a target="_blank" rel="noopener" href="http://dwz.cn/87kA17">http://dwz.cn/87kA17</a> </p>
+<p>参考文献</p>
+<ol>
+<li><p>[ROM包详解]( <a target="_blank" rel="noopener" href="http://dwz.cn/87kAky">http://dwz.cn/87kAky</a> </p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lostinai/article/details/54694564">Android中签名原理和安全性分析之META-INF文件讲解</a> </p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://dwz.cn/87kAeX"> Android系统启动顺序(按下power键后所做的的工作)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4dc32cd64470">Android启动流程</a> </p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://dwz.cn/87l2fh">android boot.img 结构</a></p>
+</li>
+<li><p>[理解boot.img与静态分析Android/linux内核]( <a target="_blank" rel="noopener" href="http://dwz.cn/87kAh4">http://dwz.cn/87kAh4</a> </p>
+</li>
+</ol>
+<p>感谢所有以上工具和文章的作者和@LTDSA 这些天的帮助</p>
+<p>#安卓日常# #玩机技巧# #刷机#</p>
+<p>To Be Continued…</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/AndroidRom%E5%BC%80%E5%8F%91/">AndroidRom开发</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Android%E5%BC%80%E5%8F%91/">Android开发</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Android/">Android</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%89%E5%8D%93/">安卓</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%B7%E6%9C%BA/">刷机</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%8E%A9%E6%9C%BA%E6%8C%87%E5%8D%97/">玩机指南</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/07/21/the_way_to_an_android_rom_2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">刷机包是怎样炼成的！（二）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
